@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://xmlns.oracle.com/JavaAdapterTest/types"
+            xmlns:tns="http://xmlns.oracle.com/JavaAdapterTest/types"
+            elementFormDefault="qualified">
+
+    <!-- Request/Response Elements -->
+    <xsd:element name="LoanProcessRequest" type="tns:LoanProcessRequestType"/>
+    <xsd:element name="LoanProcessResponse" type="tns:LoanProcessResponseType"/>
+    <xsd:element name="FaultDetail" type="tns:FaultDetailType"/>
+
+    <!-- Request Type -->
+    <xsd:complexType name="LoanProcessRequestType">
+        <xsd:sequence>
+            <xsd:element name="applicantName" type="xsd:string"/>
+            <xsd:element name="ssn" type="xsd:string"/>
+            <xsd:element name="loanAmount" type="xsd:double"/>
+            <xsd:element name="monthlyIncome" type="xsd:double"/>
+            <xsd:element name="monthlyDebt" type="xsd:double"/>
+            <xsd:element name="propertyValue" type="xsd:double"/>
+            <xsd:element name="documentData" type="xsd:base64Binary" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- Response Type -->
+    <xsd:complexType name="LoanProcessResponseType">
+        <xsd:sequence>
+            <xsd:element name="loanId" type="xsd:string"/>
+            <xsd:element name="status" type="xsd:string"/>
+            <xsd:element name="decision" type="xsd:string"/>
+            <xsd:element name="decisionNotes" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="dtiRatio" type="xsd:double" minOccurs="0"/>
+            <xsd:element name="ltvRatio" type="xsd:double" minOccurs="0"/>
+            <xsd:element name="riskScore" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="monthlyPayment" type="xsd:double" minOccurs="0"/>
+            <xsd:element name="documentClassification" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- Fault Type -->
+    <xsd:complexType name="FaultDetailType">
+        <xsd:sequence>
+            <xsd:element name="errorCode" type="xsd:string"/>
+            <xsd:element name="errorMessage" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

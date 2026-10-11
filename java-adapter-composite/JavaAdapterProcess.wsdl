@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="JavaAdapterProcess"
+                  targetNamespace="http://xmlns.oracle.com/JavaAdapterTest/JavaAdapterProcess"
+                  xmlns:tns="http://xmlns.oracle.com/JavaAdapterTest/JavaAdapterProcess"
+                  xmlns:types="http://xmlns.oracle.com/JavaAdapterTest/types"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://xmlns.oracle.com/JavaAdapterTest/types"
+                        schemaLocation="JavaAdapterProcess.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="LoanProcessRequestMessage">
+        <wsdl:part name="payload" element="types:LoanProcessRequest"/>
+    </wsdl:message>
+    <wsdl:message name="LoanProcessResponseMessage">
+        <wsdl:part name="payload" element="types:LoanProcessResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ProcessingFaultMessage">
+        <wsdl:part name="fault" element="types:FaultDetail"/>
+    </wsdl:message>
+
+    <wsdl:portType name="JavaAdapterProcess">
+        <wsdl:operation name="processLoan">
+            <wsdl:input message="tns:LoanProcessRequestMessage"/>
+            <wsdl:output message="tns:LoanProcessResponseMessage"/>
+            <wsdl:fault name="processingFault" message="tns:ProcessingFaultMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="JavaAdapterProcessBinding" type="tns:JavaAdapterProcess">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="processLoan">
+            <soap:operation soapAction="processLoan"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="processingFault">
+                <soap:fault name="processingFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="javaadapter_client_ep">
+        <wsdl:port name="JavaAdapterProcess_pt" binding="tns:JavaAdapterProcessBinding">
+            <soap:address location="http://localhost:8080/soap/JavaAdapterProcess"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

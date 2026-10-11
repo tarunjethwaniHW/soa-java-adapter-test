@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sca="http://xmlns.oracle.com/sca/1.0"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://xmlns.oracle.com/sca/1.0
+           http://xmlns.oracle.com/sca/1.0">
+
+    <!-- ================================================================== -->
+    <!-- Risk Scorer Spring Bean                                            -->
+    <!-- Calculates risk scores for loan applications                       -->
+    <!-- Exposed as SCA service for SOA composite integration               -->
+    <!-- ================================================================== -->
+
+    <bean id="riskScorerBean"
+          class="com.soa.spring.RiskScorerImpl"
+          scope="singleton">
+        <property name="baseRiskScore" value="500"/>
+        <property name="maxRiskScore" value="850"/>
+    </bean>
+
+    <!-- SCA Service Exposure -->
+    <sca:service name="RiskScorerService"
+                 type="com.soa.spring.IRiskScorer"
+                 target="riskScorerBean"/>
+
+</beans>
